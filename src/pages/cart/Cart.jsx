@@ -5,14 +5,14 @@ import { remove } from '../../store/cartSlice';
 const Cart = () => {
   const products = useSelector((state)=>state.cart);
   const dispatch = useDispatch();
-  const removeFromCart = (product)=>{
-    dispatch(remove({id:product._id}))
+  const removeFromCart = (productId)=>{
+    dispatch(remove(productId))
   }
   return (
     <div>
         <div className="h-full  bg-gray-100 pt-20">
     <h1 className="mb-10 text-center text-2xl font-bold">Cart Items</h1>
-    <div className="mx-auto max-w-5xl justify-center px-6 md:flex md:space-x-6 xl:px-0">
+    <div className="mx-auto max-w-5xl justify-center px-6 md:flex md:space-x-6 xl:px-0 my-8">
       <div className="rounded-lg md:w-2/3">
         {
           products.map((product)=>{
@@ -32,7 +32,7 @@ const Cart = () => {
               </div>
               <div className="flex items-center space-x-4">
                 <p className="text-sm"><span className='font-bold'>Rs:</span> {product.productPrice}</p>
-                <svg onClick={()=>removeFromCart(product)} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="h-5 w-5 cursor-pointer duration-150 hover:text-red-500">
+                <svg onClick={()=>removeFromCart(product._id)} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="h-5 w-5 cursor-pointer duration-150 hover:text-red-500">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
                 </svg>
               </div>
