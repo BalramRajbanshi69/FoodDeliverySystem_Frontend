@@ -1,40 +1,58 @@
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import {Link, useNavigate} from "react-router-dom"
 import { registerUser } from '../../../store/authSlice'
-import { STATUSES } from '../../../globals/misc/status'
+import { STATUSES } from '../../../globals/misc/statuses'
 const Register = () => {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const {status} = useSelector((state)=>state.auth);
-    const [userData,setUserData] = useState({
-    username : "",
-    phoneNumber : "",
-    email : "",
-    password : ""
-    
+const {status}= useSelector((state)=>state.auth);  
+// console.log(data);
+
+  const navigate = useNavigate();
+  const [userData,setUserData] = useState({
+    username:"",
+    email:"",
+    phoneNumber:"",
+    password:""
   })
+
+
   const handleChange = (e)=>{
-    const {name,value} = e.target 
+    const {name,value} = e.target
     setUserData({
       ...userData,
-      [name] : value
+      [name]:value
     })
   }
 
-  const handleSubmit = (e)=>{
-    e.preventDefault()
-    dispatch(registerUser(userData))
-    if(status === STATUSES.SUCCESS){
-      return navigate("/login")
+
+ 
+
+
+const handleSubmit = (e)=>{
+  e.preventDefault();
+   dispatch(registerUser(userData));
+   if (status === STATUSES.SUCCESS) {
+     return navigate("/login");
     }
-    if(status === STATUSES.ERROR){
-      alert("Something Went Wrong, Try again")
+    if (status === STATUSES.ERROR) {
+      alert("something went wrong!");
       return;
     }
-   
-  }
+
+}
+
+
+
+
+
+
+
+  
+     
+  
+
   return (
     <div>
       
@@ -62,7 +80,7 @@ const Register = () => {
           </div>
 
           <div className="mt-10">
-            <form action="#" onSubmit={handleSubmit}>
+            <form  onSubmit={handleSubmit}>
               <div className="flex flex-col mb-6">
                 <label
                   htmlFor="username"
@@ -94,6 +112,7 @@ const Register = () => {
                     type="text"
                     name="username"
                     onChange={handleChange}
+                    
                     className="
                       text-sm
                       placeholder-gray-500
@@ -138,6 +157,7 @@ const Register = () => {
                     type="email"
                     name="email"
                     onChange={handleChange}
+              
                     className="
                       text-sm
                       placeholder-gray-500
@@ -227,6 +247,7 @@ const Register = () => {
                     id="password"
                     type="password"
                     name="password"
+                    
                     onChange={handleChange}
                     className="
                       text-sm

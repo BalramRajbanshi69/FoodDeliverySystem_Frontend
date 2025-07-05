@@ -1,51 +1,35 @@
-import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { Link, useNavigate } from 'react-router-dom'
+import { useSelector } from "react-redux";
+import { APIAuthenticated } from "../../../http";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
-import { STATUSES } from '../../../globals/misc/statuses';
-import { loginUser } from '../../../store/authSlice';
-
-
-
-const Login = () => {
-  const {token,data,status} = useSelector((state)=>state.auth);  
-    
-  
-  const [userData,setUserData]= useState({
-    email:"",
-    password:""
-  })
-  
-  const dispatch = useDispatch();
+const ResetPassword = () => {
   const navigate = useNavigate();
+  const { forgotPasswordData } = useSelector((state) => state.auth);
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const data = {
+    newPassword,
+    confirmPassword,
+    email: forgotPasswordData.email,
+  };
 
-  const handleChange=(e)=>{
-    const {name,value} = e.target;
-    setUserData({
-      ...userData,
-      [name]:value
-    })
-  }
+  const handleSubmit = async (e) => {
+    try {
+      e.preventDefault();
+      const response = await APIAuthenticated.post("/auth/resetPassword", data);
 
-  const handleSubmit= (e)=>{
-    e.preventDefault();
-    dispatch(loginUser(userData))
-       navigate("/")
-    
-    // if(status === STATUSES.ERROR){
-    //    alert("something went wrong!")
-    //    return;
-    // } 
-  }
+      if (response.status === 200) {
+        navigate("/login");
+      }
+    } catch (error) {
+      console.log(error);
+      alert("Something went wrong");
+    }
+  };
 
-
-
-  
-  
-  
   return (
-   
-        <div>
+    <div>
       <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100">
         <div
           className="
@@ -62,21 +46,15 @@ const Login = () => {
             max-w-md
           "
         >
-          <div className="font-medium self-center text-xl sm:text-3xl text-gray-800">
-            Welcome Back
-          </div>
-          <div className="mt-4 self-center text-xl sm:text-sm text-gray-800">
-            Enter your credentials to access your account
-          </div>
 
           <div className="mt-10">
-            <form action="#" onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit}>
               <div className="flex flex-col mb-5">
                 <label
-                  htmlFor="email"
+                  htmlFor="newPassword"
                   className="mb-1 text-xs tracking-wide text-gray-600"
                 >
-                  E-Mail Address:
+                  Enter New Password:
                 </label>
                 <div className="relative">
                   <div
@@ -96,10 +74,10 @@ const Login = () => {
                   </div>
 
                   <input
-                    id="email"
-                    type="email"
-                    name="email"
-                    onChange={handleChange}
+                    id="newPassword"
+                    type="password"
+                    name="newPassword"
+                    onChange={(e)=>setNewPassword(e.target.value)}
                     className="
                       text-sm
                       placeholder-gray-500
@@ -111,16 +89,16 @@ const Login = () => {
                       py-2
                       focus:outline-none focus:border-blue-400
                     "
-                    placeholder="Enter your email"
+                    placeholder="Enter your new password"
                   />
                 </div>
               </div>
               <div className="flex flex-col mb-6">
                 <label
-                  htmlFor="password"
+                  htmlFor="confirmPassword"
                   className="mb-1 text-xs sm:text-sm tracking-wide text-gray-600"
                 >
-                  Password:
+                  Confirm Password:
                 </label>
                 <div className="relative">
                   <div
@@ -142,10 +120,10 @@ const Login = () => {
                   </div>
 
                   <input
-                    id="password"
+                    id="confirmPassword"
                     type="password"
-                    name="password"
-                    onChange={handleChange}
+                    name="confirmPassword"
+                    onChange={(e)=>setConfirmPassword(e.target.value)}
                     className="
                       text-sm
                       placeholder-gray-500
@@ -157,7 +135,7 @@ const Login = () => {
                       py-2
                       focus:outline-none focus:border-blue-400
                     "
-                    placeholder="Enter your password"
+                    placeholder="Enter your new confirm password"
                   />
                 </div>
               </div>
@@ -183,7 +161,7 @@ const Login = () => {
                     ease-in
                   "
                 >
-                  <span className="mr-2 uppercase">Login</span>
+                  <span className="mr-2 uppercase">Reset Password</span>
                   <span>
                     <svg
                       className="h-6 w-6"
@@ -199,25 +177,12 @@ const Login = () => {
                   </span>
                 </button>
               </div>
-             <div className='mt-2 flex flex-col items-end text-red-400'>
-               <Link to="/forgotpassword">Forgot Password?</Link>
-             </div>
-             <div className="flex justify-center items-center mt-6">
-          <span className="ml-2">
-            Don't have an account?
-            <Link to="/register" className="text-xm ml-2 text-blue-500 font-semibold">
-              Register now
-            </Link>
-          </span>
-        </div>
             </form>
           </div>
         </div>
-        
       </div>
     </div>
-    
-  )
-}
+  );
+};
 
-export default Login
+export default ResetPassword;

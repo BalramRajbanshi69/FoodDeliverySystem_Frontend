@@ -1,5 +1,19 @@
+import { useDispatch, useSelector } from "react-redux";
+import { setSearchTerm } from "../../../store/productSlice";
+
 
 const Hero = () => {
+
+
+  // const searchTerm = useSelector((state)=>state.product.searchTerm)
+  // or
+  const {searchTerm} = useSelector((state)=>state.product)
+  const dispatch = useDispatch()
+  const handleSearchChange = (e)=>{
+    dispatch(setSearchTerm(e.target.value))
+  }
+
+  
   return (
     <div className="relative w-full">
       <div className="relative bg-yellow-50">
@@ -10,6 +24,7 @@ const Hero = () => {
               <h1 className="text-4xl font-bold text-yellow-900 md:text-5xl lg:w-10/12">
                 Your favorite dishes, right at your door
               </h1>
+              
               <form action="" className="w-full mt-12">
                 <div className="relative flex p-1 bg-white border border-yellow-200 rounded-full shadow-md md:p-1">
                   <select
@@ -25,10 +40,13 @@ const Hero = () => {
                     placeholder="Your favorite food"
                     className="w-full p-4 rounded-full"
                     type="text"
+                    onChange={handleSearchChange}
+                    value={searchTerm}
                   />
                   <button
                     type="button"
                     title="Start buying"
+                 
                     className="px-2 py-1 ml-auto text-center transition rounded-full bg-gradient-to-b from-yellow-200 to-yellow-300 hover:to-red-300 active:from-yellow-400 focus:from-red-400 md:px-12"
                   >
                     <span className="hidden font-semibold text-yellow-900 md:block">

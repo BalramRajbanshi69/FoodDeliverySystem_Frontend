@@ -1,6 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios"
-import { STATUSES } from "../globals/misc/status";
+import { STATUSES } from "../globals/misc/statuses";
+import { API } from "../http";
+
 
 
 
@@ -8,8 +10,10 @@ import { STATUSES } from "../globals/misc/status";
 const productSlice = createSlice({
     name:"product",
     initialState:{
-        data:[],
-        status: STATUSES.SUCCESS
+        data:[],                      // getting all the products 
+        status: STATUSES.SUCCESS,
+        selectedProductDetails:{},            // getting selected single product details
+        searchTerm:""                     // search hero home page fetched product by search name,_id,...
     },
     reducers:{                      // reducers are pure and synchronous , so no api calls
         setProducts(state,action){
@@ -17,12 +21,18 @@ const productSlice = createSlice({
         },
         setStatus(state,action){
             state.status = action.payload
+        },
+        setSelectedProductDetails(state,action){                      // single selected product details
+            state.selectedProductDetails = action.payload
+        },
+        setSearchTerm(state,action){
+            state.searchTerm = action.payload
         }
     }
 })
 
 
-export const {setProducts,setStatus} = productSlice.actions
+export const {setProducts,setStatus,setSelectedProductDetails,setSearchTerm} = productSlice.actions
 export default productSlice.reducer
 
 
@@ -41,13 +51,32 @@ export function fetchProducts(){
     return async function fetchProductThunk(dispatch){
         dispatch(setStatus(STATUSES.LOADING))
         try {
-            const response = await axios.get("http://localhost:3500/api/products");
-            dispatch(setProducts(response.data.data))
+            const response = await API.get("/products");
+            dispatch(setProducts(response.data.data.reverse()))
             dispatch(setStatus(STATUSES.SUCCESS))
         } catch (error) {
             console.log(error);
             dispatch(setStatus(STATUSES.ERROR))
             
+        }
+    }
+}
+
+
+
+
+// single selected product details
+
+export function fetchSingleSelectedProductDetails(productId){
+    return async function fetchSingleSelectedProductDetailsThunk(dispatch){
+        dispatch(setStatus(STATUSES.LOADING))
+        try {
+          const response = await API.get(`/products/${productId}`)        // getting single product throught id backend
+          dispatch(setSelectedProductDetails(response.data.data))      // from reducers
+          dispatch(setStatus(STATUSES.SUCCESS))
+        } catch (error) {
+            // console.log(error);
+            dispatch(setStatus(STATUSES.ERROR))  
         }
     }
 }

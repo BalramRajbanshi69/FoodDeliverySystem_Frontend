@@ -37,6 +37,16 @@ import Cart from './pages/cart/Cart'
 import Navbar from './globals/component/navbar/Navbar'
 import Footer from './globals/component/footer/Footer'
 import { Provider } from 'react-redux'
+import ProductDetails from './pages/productDetails/ProductDetails'
+import CheckOut from './pages/checkout/CheckOut'
+import KhaltiSuccess from './pages/khalti/KhaltiSuccess'
+import UserProfile from './pages/profile/UserProfile'
+import MyOrders from './pages/myOrders/MyOrders'
+import OrderDetails from './pages/orderDetails/OrderDetails'
+import ForgotPassword from './pages/auth/forgotPassword/ForgotPassword'
+import VerifyOtp from './pages/auth/verifyOtp/VerifyOtp'
+import ResetPassword from './pages/auth/resetPassword/ResetPassword'
+
 
 const App = () => {
   return (
@@ -49,6 +59,18 @@ const App = () => {
           <Route path='/login' element={<Login/>}/>
           <Route path='/register' element={<Register/>}/>
           <Route path='/cart' element={<Cart/>}/>
+          <Route path='/productDetails/:id' element={<ProductDetails/>}/>
+          <Route path='/checkout' element={<CheckOut/>}/>
+          <Route path='/success' element={<KhaltiSuccess/>}/>
+          <Route path='/profile' element={<UserProfile/>}/>
+          {/* show all your orders  */}
+          <Route path='/myorders' element={<MyOrders/>}/>    
+                  {/* show your details of the order */}
+          <Route path='/myorder/:id' element={<OrderDetails/>}/>
+          <Route path='/forgotpassword' element={<ForgotPassword/>}/>
+          <Route path='/verifyotp' element={<VerifyOtp/>}/>
+          <Route path='/resetpassword' element={<ResetPassword/>}/>
+       
         </Routes>
         <Footer/>
         </BrowserRouter>
