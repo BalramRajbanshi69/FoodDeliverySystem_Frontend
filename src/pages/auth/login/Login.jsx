@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom'
 
 import { STATUSES } from '../../../globals/misc/statuses';
 import { loginUser } from '../../../store/authSlice';
+import toast from 'react-hot-toast';
 
 
 
@@ -29,8 +30,14 @@ const Login = () => {
 
   const handleSubmit= (e)=>{
     e.preventDefault();
-    dispatch(loginUser(userData))
+    try {
+      dispatch(loginUser(userData))
+      toast.success("User loggedin succesfully")
        navigate("/")
+    } catch (error) {
+      console.error(error);
+      toast.error("failed to loggedin user!")
+    }
     
     // if(status === STATUSES.ERROR){
     //    alert("something went wrong!")

@@ -4,6 +4,7 @@ import { fetchSingleSelectedProductDetails } from "../../../../store/productSlic
 import { useNavigate } from "react-router-dom";
 import { addToCart } from "../../../../store/cartSlice";
 import { socket } from "../../../../App";
+import toast from "react-hot-toast";
 
 const Product = ({ id: productId }) => {
   const dispatch = useDispatch();
@@ -24,7 +25,9 @@ const Product = ({ id: productId }) => {
   // why? to check if user is logged in then give permission to add to cart  otherwise throw to login page
   const { data: user } = useSelector((state) => state.auth);
   const handleAddToCart = () => {
-    if (
+   
+    try {
+       if (
       user?.length == 0 &&
       (localStorage.getItem("token") == "" ||
         localStorage.getItem("token") == null ||
@@ -32,7 +35,12 @@ const Product = ({ id: productId }) => {
     ) {
       return navigate("/login");
     }
-    dispatch(addToCart(productId));
+      dispatch(addToCart(productId));
+    toast.success("Product added to cart successfully")
+    } catch (error) {
+      console.error(error);
+      toast.error("failed to add products to cart")
+    }
   };
 
 

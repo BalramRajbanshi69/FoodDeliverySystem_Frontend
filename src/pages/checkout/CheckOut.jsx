@@ -8,6 +8,7 @@ import { useEffect } from "react";
 import { STATUSES } from "../../globals/misc/statuses";
 import {useNavigate} from "react-router-dom"
 import { APIAuthenticated } from "../../http";
+import toast from "react-hot-toast";
 
 const CheckOut = () => {
       const {items:products} = useSelector((state)=>state.cart)
@@ -30,14 +31,15 @@ const CheckOut = () => {
         phoneNumber : data.phoneNumber
     }
     dispatch(createOrder(orderDetails))
-    
-   
-    
+    toast.success("Order placed successfully")  
    }
+
+
    const proceedForKhaltiPayment = ()=>{
     const currentOrder = data[data.length -1]
     if(status === STATUSES.SUCCESS && paymentMethod === "COD" ){
-        return alert("Order placed successfully")
+       return;
+        // return alert("Order placed successfully")
      }  
     if(status === STATUSES.SUCCESS && paymentMethod === "khalti" ){
         const {totalAmount,_id:orderId} = data[data.length -1]
@@ -61,7 +63,6 @@ const CheckOut = () => {
       if(response.status === 200){
         window.location.href = response.data.paymentUrl
       }
-
     } catch (error) {
       console.log(error)
     }

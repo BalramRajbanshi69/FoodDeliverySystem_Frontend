@@ -46,11 +46,11 @@ import OrderDetails from './pages/orderDetails/OrderDetails'
 import ForgotPassword from './pages/auth/forgotPassword/ForgotPassword'
 import VerifyOtp from './pages/auth/verifyOtp/VerifyOtp'
 import ResetPassword from './pages/auth/resetPassword/ResetPassword'
+import Toast from './toast/Toast'
 
 
 // socket integration
 import {io} from "socket.io-client"            // install socket.io-client
-import Toast from './toast/Toast'
 export const socket = io("https://fooddeliverysystem-backend-1.onrender.com",{
   auth:{
     token:localStorage.getItem("token")

@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { APIAuthenticated } from "../../http";
 import QRCode from "react-qr-code";
+import toast from "react-hot-toast";
 
 const OrderDetails = () => {
   const { id } = useParams();
@@ -40,10 +41,12 @@ const OrderDetails = () => {
       const response = await APIAuthenticated.patch("/order/cancel/", { id });
       // console.log(response.data);
       if (response.status === 200) {
+        toast.success("Order cancelled successfully")
         navigate("/myorders");
       }
     } catch (error) {
       console.log(error);
+      toast.error("failed to cancel order")
     }
   };
 
@@ -53,10 +56,12 @@ const OrderDetails = () => {
       const response = await APIAuthenticated.delete(`/order/${id}`);
       console.log(response.data);
       if (response.status === 200) {
+        toast.success("Order deleted successfully")
         navigate("/myorders");
       }
     } catch (error) {
       console.log(error);
+      toast.error("failed to delete order")
     }
   };
 
