@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchSingleSelectedProductDetails } from "../../../../store/productSlice";
 import { useNavigate } from "react-router-dom";
 import { addToCart } from "../../../../store/cartSlice";
+import { socket } from "../../../../App";
 
 const Product = ({ id: productId }) => {
   const dispatch = useDispatch();
@@ -33,6 +34,7 @@ const Product = ({ id: productId }) => {
     }
     dispatch(addToCart(productId));
   };
+
 
   return (
     <div>

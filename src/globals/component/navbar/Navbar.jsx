@@ -68,7 +68,7 @@ export default function Navbar() {
             <div className="text-gray-600 lg:pr-4">
               <ul className="space-y-6 tracking-wide font-medium text-sm md:flex md:space-y-0">
                    {
-                    user.length > 0 || localStorage.getItem("token")  && 
+                    (user?.length > 0 || localStorage.getItem("token"))  && 
                 <li>
                        <Link
                     to="profile"

@@ -27,12 +27,12 @@ const productSlice = createSlice({
         },
         setSearchTerm(state,action){
             state.searchTerm = action.payload
-        }
+        },
     }
 })
 
 
-export const {setProducts,setStatus,setSelectedProductDetails,setSearchTerm} = productSlice.actions
+export const {setProducts,setStatus,setSelectedProductDetails,setSearchTerm,updateProductData} = productSlice.actions
 export default productSlice.reducer
 
 
@@ -80,3 +80,7 @@ export function fetchSingleSelectedProductDetails(productId){
         }
     }
 }
+
+
+
+

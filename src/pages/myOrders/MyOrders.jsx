@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchOrder } from "../../store/checkoutSlice";
+import { fetchOrder, updatedOrderStatusInStore } from "../../store/checkoutSlice";
 import {useNavigate} from "react-router-dom"
+import { socket } from "../../App";
 
 const MyOrders = () => {
   const dispatch = useDispatch();
@@ -24,6 +25,8 @@ const MyOrders = () => {
     order.orderStatus.toLowerCase().includes(searchTerm.toLowerCase())             // you can search with orderStatus || again and filter according to it whnat you gonna search accordingly 
   )
   .filter((order) => date === "" || new Date(order.createdAt).toLocaleDateString() === new Date(date).toLocaleDateString());  // filter according to date order created at
+  
+  
 
 
   useEffect(() => {
@@ -31,7 +34,13 @@ const MyOrders = () => {
   }, []);
 
 
-
+// socket get data 
+  useEffect(()=>{
+    socket.on("statusUpdated",(data)=>{
+      dispatch(updatedOrderStatusInStore(data))
+    })
+  })
+    
 
   return (
     <div>
