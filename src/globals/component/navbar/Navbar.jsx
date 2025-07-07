@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { logOut } from "../../../store/authSlice";
 import { useEffect } from "react";
 import { fetchCartItems } from "../../../store/cartSlice";
+import { useState } from "react";
 
 export default function Navbar() {
   const {items} = useSelector((state) => state.cart); // state will take whole store items but we need only name of state cart name from cartSlice name:"cart"
@@ -20,7 +21,7 @@ export default function Navbar() {
     dispatch(logOut())
     // remove/clear token from localStorage
     localStorage.removeItem("token")
-    navigate("/")
+    navigate("/login")
   }
 
   // first time render
@@ -29,6 +30,8 @@ export default function Navbar() {
   useEffect(()=>{
     dispatch(fetchCartItems())
   },[dispatch])
+
+
 
   return (
     <nav className="fixed  z-10 w-full bg-white md:absolute md:bg-transparent">
@@ -117,9 +120,14 @@ export default function Navbar() {
                     title="Start buying"
                     className="w-full py-3 px-6 text-center rounded-full transition bg-yellow-300 hover:bg-yellow-100 active:bg-yellow-400 focus:bg-yellow-300 sm:w-max"
                   >
+
+
+
                     <span className="block text-yellow-900 font-semibold text-sm">
                       <Link to="/login">Login</Link>
                     </span>
+
+
                   </button>
                 </>
               ) : (

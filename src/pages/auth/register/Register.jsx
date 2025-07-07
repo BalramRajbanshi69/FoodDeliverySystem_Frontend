@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import {Link, useNavigate} from "react-router-dom"
 import { registerUser } from '../../../store/authSlice'
 import { STATUSES } from '../../../globals/misc/statuses'
+import toast from 'react-hot-toast'
 const Register = () => {
   const dispatch = useDispatch();
 const {status}= useSelector((state)=>state.auth);  
@@ -32,26 +33,24 @@ const {status}= useSelector((state)=>state.auth);
 
 const handleSubmit = (e)=>{
   e.preventDefault();
-   dispatch(registerUser(userData));
+ try {
+    dispatch(registerUser(userData));
    if (status === STATUSES.SUCCESS) {
+    toast.success("User registered successfully")
      return navigate("/login");
     }
     if (status === STATUSES.ERROR) {
-      alert("something went wrong!");
       return;
     }
+    
+ } catch (error) {
+  console.error(error);
+  toast.error("failed to register. Please try later!")
+ }
 
 }
 
 
-
-
-
-
-
-  
-     
-  
 
   return (
     <div>

@@ -57,8 +57,7 @@ export function registerUser(data){
     return async function registerUserThunk(dispatch){
         dispatch(setStatus(STATUSES.LOADING));
         try {
-            const response = await API.post("/auth/register",data)   
-           
+            const response = await API.post("/auth/register",data) 
             dispatch(setStatus(STATUSES.SUCCESS));
            
         } catch (error) {

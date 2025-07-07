@@ -50,7 +50,8 @@ import ResetPassword from './pages/auth/resetPassword/ResetPassword'
 
 // socket integration
 import {io} from "socket.io-client"            // install socket.io-client
-export const socket = io("http://localhost:3500",{
+import Toast from './toast/Toast'
+export const socket = io("https://fooddeliverysystem-backend-1.onrender.com",{
   auth:{
     token:localStorage.getItem("token")
   }
@@ -62,6 +63,7 @@ const App = () => {
       <Provider store={store}>
         <BrowserRouter>
         <Navbar/>
+        <Toast/>
         <Routes>
           <Route path='/' element={<Home/>}/>
           <Route path='/login' element={<Login/>}/>
