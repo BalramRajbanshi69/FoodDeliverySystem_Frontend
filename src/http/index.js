@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_BASE_URL = import.meta.env.VITE_APP_API_URL || "http://localhost:3500"; 
+const API_BASE_URL = import.meta.env.VITE_APP_API_URL || "http://localhost:5173"; 
 
 // unauthenticated user register/login
 const API = axios.create({
