@@ -49,13 +49,26 @@ import ResetPassword from './pages/auth/resetPassword/ResetPassword'
 import Toast from './toast/Toast'
 
 
-// socket integration
-import {io} from "socket.io-client"            // install socket.io-client
-export const socket = io("https://fooddeliverysystem-backend-1.onrender.com",{
-  auth:{
-    token:localStorage.getItem("token")
-  }
-})
+// // socket integration
+// import {io} from "socket.io-client"            // install socket.io-client
+// export const socket = io("https://fooddeliverysystem-backend-1.onrender.com",{
+//   auth:{
+//     token:localStorage.getItem("token")
+//   }
+// })
+
+
+
+import { io } from "socket.io-client";
+const SOCKET_URL = import.meta.env.VITE_SOCKET_URL || "http://localhost:3500";
+
+export const socket = io(SOCKET_URL, {
+  auth: {
+    token: localStorage.getItem("token"),
+  },
+});
+
+
 
 const App = () => {
   return (
