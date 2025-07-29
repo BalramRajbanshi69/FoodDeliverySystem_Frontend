@@ -1,6 +1,6 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { deleteCartItem, updateCartItem } from '../../store/cartSlice';
+import { deleteCartItem, fetchCartItems, updateCartItem } from '../../store/cartSlice';
 import { useNavigate} from "react-router-dom"
 import s1 from '../../assets/footer-bg-image1.jpg';
 import toast from 'react-hot-toast';
@@ -30,6 +30,7 @@ const Cart = () => {
   // handle delete item from the cart
   const handleDelete = (productId)=>{
     dispatch(deleteCartItem(productId))
+    dispatch(fetchCartItems());
     toast.success("Item removed from cart");
   }
 
