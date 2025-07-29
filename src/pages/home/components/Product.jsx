@@ -4,6 +4,7 @@ import { fetchProducts } from "../../../store/productSlice";
 import { useNavigate } from "react-router-dom";
 
 const Product = () => {
+  const apiUrl = import.meta.env.VITE_APP_API_URL
   const navigate = useNavigate()
   // old approach
   // const [products,setProducts] = useState([]);
@@ -29,9 +30,11 @@ const Product = () => {
 // you can directly use data but there use data instead of products.map, use data
 
   const { data: products, status,searchTerm } = useSelector((state) => state.product); // from initialState productSlice, useSelecter for accessing , state for store and product is there. Here searchTerm to search fetchedProducts by filtering through name, description
+  console.log(products);
+  
   useEffect(() => {
     dispatch(fetchProducts()); //Triggers the async fetch when the component mounts
-  }, []);
+  }, [dispatch]);
 
 
   if (status == "loading") {
@@ -65,16 +68,23 @@ const Product = () => {
                   <div
                     key={product._id}
                     onClick={()=>navigate(`/productDetails/${product._id}`)}
-                    className=" cursor-pointer my-6 w-95 transform overflow-hidden rounded-lg bg-white dark:bg-slate-800 shadow-md duration-300 hover:scale-105 hover:shadow-lg"
+                    className=" cursor-pointer my-6 w-95 transform overflow-hidden  bg-white dark:bg-slate-800 shadow-md duration-300 hover:scale-105 hover:shadow-lg"
                   >
                     <img
                       className="h-48 w-full object-cover object-center"
+                      // src={
+                      //   product.productImage
+                      //     ? product.productImage
+                      //     : "https://images.unsplash.com/photo-1674296115670-8f0e92b1fddb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80"
+                      // }
+
                       src={
-                        product.productImage
-                          ? product.productImage
-                          : "https://images.unsplash.com/photo-1674296115670-8f0e92b1fddb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80"
-                      }
-                      alt="Product Image"
+                          product.productImage &&
+                          product.productImage.length > 0
+                            ? `${apiUrl}${product.productImage[0]}`
+                            : "https://images.unsplash.com/photo-1674296115670-8f0e92b1fddb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80"
+                        } 
+                      alt={product.productName || "Product Image"}
                     />
                     <div className="p-4">
                       <h2 className="mb-2 text-lg font-medium dark:text-white text-gray-900">

@@ -5,8 +5,10 @@ import { useNavigate } from "react-router-dom";
 import { addToCart } from "../../../../store/cartSlice";
 import { socket } from "../../../../App";
 import toast from "react-hot-toast";
+import s1 from '../../../../../src/assets/footer-bg-image1.jpg';
 
 const Product = ({ id: productId }) => {
+  const apiUrl = import.meta.env.VITE_APP_API_URL;
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { selectedProductDetails, status } = useSelector(
@@ -18,9 +20,12 @@ const Product = ({ id: productId }) => {
   const product =
     selectedProductDetails.product && selectedProductDetails.product?.[0]; // first + this
 
+
+    const {items} = useSelector((state)=>state.cart)
+
   useEffect(() => {
     dispatch(fetchSingleSelectedProductDetails(productId));
-  }, []);
+  }, [dispatch,productId]);
 
   // why? to check if user is logged in then give permission to add to cart  otherwise throw to login page
   const { data: user } = useSelector((state) => state.auth);
@@ -35,6 +40,13 @@ const Product = ({ id: productId }) => {
     ) {
       return navigate("/login");
     }
+     // Check if the product is already in the cart
+      const isItemInCart = items?.some(item => item.product?._id === productId);
+
+      if (isItemInCart) {
+        toast.error('Item is already in cart');
+        return;
+      }
       dispatch(addToCart(productId));
     toast.success("Product added to cart successfully")
     } catch (error) {
@@ -52,7 +64,8 @@ const Product = ({ id: productId }) => {
             <img
               alt="ecommerce"
               className="lg:w-1/2 w-full object-cover object-center rounded border border-gray-200"
-              src={product?.productImage}
+              // src={product?.productImage}
+              src={product?.productImage && product.productImage.length > 0 ? `${apiUrl}${product.productImage[0]}` : s1}
             />
             <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
               {/* in console, to get productName product.product[0].productName   . here product object + product arrya of [0] and accessing object with it so dot. */}

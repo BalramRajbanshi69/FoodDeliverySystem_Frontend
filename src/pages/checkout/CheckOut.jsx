@@ -11,6 +11,7 @@ import { APIAuthenticated } from "../../http";
 import toast from "react-hot-toast";
 
 const CheckOut = () => {
+      const apiUrl = import.meta.env.VITE_APP_API_URL;
       const {items:products} = useSelector((state)=>state.cart)
     const navigate = useNavigate()
     const dispatch = useDispatch()
@@ -71,6 +72,7 @@ const CheckOut = () => {
   //  handle delete items
     const handleDelete = (productId)=>{
         dispatch(deleteCartItem(productId))
+        toast.success("Item removed from cart");
     }
           
   return (
@@ -169,7 +171,13 @@ const CheckOut = () => {
             <div  className="flex flex-col rounded-lg bg-white sm:flex-row ">
               <img
                 className="m-2 h-24 w-28 rounded-md  object-cover object-center"
-                src={product.product.productImage}
+                // src={product.product.productImage}
+                src={
+                                      product?.product?.productImage &&
+                                      product.product.productImage.length > 0
+                                        ? `${apiUrl}${product.product.productImage[0]}`
+                                        : s1
+                                    }
                 alt="product-image"
               />
               <div className="flex w-full flex-col px-4 py-4">
