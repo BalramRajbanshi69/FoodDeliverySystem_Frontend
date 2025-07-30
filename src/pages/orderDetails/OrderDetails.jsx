@@ -4,8 +4,10 @@ import { useNavigate, useParams } from "react-router-dom";
 import { APIAuthenticated } from "../../http";
 import QRCode from "react-qr-code";
 import toast from "react-hot-toast";
+import s1 from '.././../assets/footer-bg-image1.jpg';
 
 const OrderDetails = () => {
+    const apiUrl = import.meta.env.VITE_APP_API_URL;
   const { id } = useParams();
   const navigate = useNavigate();
   const { orders } = useSelector((state) => state.checkout);
@@ -98,7 +100,8 @@ const OrderDetails = () => {
                       <div className="pb-4 md:pb-8 w-full md:w-35">
                         <img
                           className="w-full hidden md:block"
-                          src={item.product.productImage}
+                          // src={item.product.productImage}
+                            src={item.product?.productImage && item.product.productImage.length > 0 ? `${apiUrl}${item.product.productImage[0]}` : s1}
                           alt="dress"
                         />
                       </div>
@@ -214,7 +217,7 @@ const OrderDetails = () => {
                   <div className="w-full">
                     {filteredOrder?.orderStatus !== "cancelled" && (
                       <div className="flex flex-col gap-2">
-                      <div className="flex gap-2">
+                      <div className="flex flex-col gap-2">
                           <div className="flex w-full justify-center items-center md:justify-start md:items-start">
                           <button className=" hover:bg-green-700 hover:border-none hover:text-white cursor-pointer rounded dark:border-white dark:hover:bg-gray-900 dark:bg-transparent dark:text-white py-3  focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 border border-gray-800 w-96 2xl:w-full text-base font-medium leading-4 text-gray-800">
                             Edit Order
