@@ -25,6 +25,8 @@ const Product = ({ id: productId }) => {
 
   useEffect(() => {
     dispatch(fetchSingleSelectedProductDetails(productId));
+    console.log(productId);
+    
   }, [dispatch,productId]);
 
   // why? to check if user is logged in then give permission to add to cart  otherwise throw to login page
