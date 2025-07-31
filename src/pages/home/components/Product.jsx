@@ -57,7 +57,7 @@ const Product = () => {
         <div className="relative bg-white-50 ">
           <div className="mx-auto max-w-2xl px-4  lg:max-w-7xl lg:px-8">
             <h1 className="text-2xl py-8 font-bold text-yellow-900 md:text-3xl lg:w-10/12">
-              Our Popular Product
+             Popular Food 
             </h1>
 
             {/* make a grid such that start from page matching to it */}

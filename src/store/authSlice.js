@@ -63,6 +63,9 @@ export function registerUser(data){
         } catch (error) {
             console.log(error);
             dispatch(setStatus(STATUSES.ERROR));
+            throw new Error(
+        error.response?.data?.message || "An unexpected error occurred during registration"
+      );
             
         }
 
@@ -89,6 +92,9 @@ export function loginUser(data){
         } catch (error) {
             console.log(error);
             dispatch(setStatus(STATUSES.ERROR))
+            throw new Error(
+        error.response?.data?.msg || "An unexpected error occurred during login"
+      );
         }
     }
 }

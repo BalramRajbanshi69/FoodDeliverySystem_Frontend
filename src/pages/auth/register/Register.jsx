@@ -44,8 +44,11 @@ const handleSubmit = (e)=>{
     }
     
  } catch (error) {
-  console.error(error);
-  toast.error("failed to register. Please try later!")
+   if (error.message === "User already exists") {
+          toast.error("User with this email already exists");
+        } else {
+          toast.error(error.message || "An unexpected error occurred during registration");
+        }
  }
 
 }

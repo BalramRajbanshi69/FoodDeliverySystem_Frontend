@@ -36,13 +36,8 @@ const Login = () => {
        navigate("/")
     } catch (error) {
       console.error(error);
-      toast.error("failed to loggedin user!")
-    }
+      toast.error(error.message || "An unexpected error occurred during login");    }
     
-    // if(status === STATUSES.ERROR){
-    //    alert("something went wrong!")
-    //    return;
-    // } 
   }
 
 
