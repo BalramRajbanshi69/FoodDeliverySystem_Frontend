@@ -719,7 +719,7 @@ const Register = () => {
                     ease-in
                   "
                 >
-                  <span className="mr-2 uppercase">Register</span>
+                  <span className="mr-2 uppercase cursor-pointer">Register</span>
                   <span>
                     <svg
                       className="h-6 w-6"
