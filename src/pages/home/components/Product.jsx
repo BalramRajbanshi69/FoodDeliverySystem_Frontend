@@ -4,7 +4,7 @@ import { fetchProducts } from "../../../store/productSlice";
 import { useNavigate } from "react-router-dom";
 
 const Product = () => {
-  const apiUrl = import.meta.env.VITE_APP_API_URL
+  // const apiUrl = import.meta.env.VITE_APP_API_URL
   const navigate = useNavigate()
   // old approach
   // const [products,setProducts] = useState([]);
@@ -81,7 +81,7 @@ const Product = () => {
                       src={
                           product.productImage &&
                           product.productImage.length > 0
-                            ? `${apiUrl}${product.productImage[0]}`
+                            ? product.productImage[0]
                             : "https://images.unsplash.com/photo-1674296115670-8f0e92b1fddb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80"
                         } 
                       alt={product.productName || "Product Image"}

@@ -9,10 +9,13 @@ import { STATUSES } from "../../globals/misc/statuses";
 import {useNavigate} from "react-router-dom"
 import { APIAuthenticated } from "../../http";
 import toast from "react-hot-toast";
+import s1 from "../../assets/footer-bg-image1.jpg"
 
 const CheckOut = () => {
-      const apiUrl = import.meta.env.VITE_APP_API_URL;
+      // const apiUrl = import.meta.env.VITE_APP_API_URL;
       const {items:products} = useSelector((state)=>state.cart)
+      // console.log("product",products);
+      
     const navigate = useNavigate()
     const dispatch = useDispatch()
    const {register,handleSubmit,formState} = useForm()
@@ -175,7 +178,7 @@ const CheckOut = () => {
                 src={
                                       product?.product?.productImage &&
                                       product.product.productImage.length > 0
-                                        ? `${apiUrl}${product.product.productImage[0]}`
+                                        ? product.product.productImage[0]
                                         : s1
                                     }
                 alt="product-image"

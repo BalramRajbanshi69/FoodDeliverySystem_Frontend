@@ -7,7 +7,7 @@ import toast from "react-hot-toast";
 import s1 from '.././../assets/footer-bg-image1.jpg';
 
 const OrderDetails = () => {
-    const apiUrl = import.meta.env.VITE_APP_API_URL;
+    // const apiUrl = import.meta.env.VITE_APP_API_URL;
   const { id } = useParams();
   const navigate = useNavigate();
   const { orders } = useSelector((state) => state.checkout);
@@ -101,7 +101,7 @@ const OrderDetails = () => {
                         <img
                           className="w-full hidden md:block"
                           // src={item.product.productImage}
-                            src={item.product?.productImage && item.product.productImage.length > 0 ? `${apiUrl}${item.product.productImage[0]}` : s1}
+                            src={item.product?.productImage && item.product.productImage.length > 0 ? item.product.productImage[0] : s1}
                           alt="dress"
                         />
                       </div>

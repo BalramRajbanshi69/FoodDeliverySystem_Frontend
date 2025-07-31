@@ -8,7 +8,7 @@ import toast from "react-hot-toast";
 import s1 from '../../../../../src/assets/footer-bg-image1.jpg';
 
 const Product = ({ id: productId }) => {
-  const apiUrl = import.meta.env.VITE_APP_API_URL;
+  // const apiUrl = import.meta.env.VITE_APP_API_URL;
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { selectedProductDetails, status } = useSelector(
@@ -67,7 +67,7 @@ const Product = ({ id: productId }) => {
               alt="ecommerce"
               className="lg:w-1/2 w-full object-cover object-center rounded border border-gray-200"
               // src={product?.productImage}
-              src={product?.productImage && product.productImage.length > 0 ? `${apiUrl}${product.productImage[0]}` : s1}
+              src={product?.productImage && product.productImage.length > 0 ? product.productImage[0] : s1}
             />
             <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
               {/* in console, to get productName product.product[0].productName   . here product object + product arrya of [0] and accessing object with it so dot. */}

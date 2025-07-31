@@ -7,7 +7,7 @@ import toast from 'react-hot-toast';
 
 
 const Cart = () => {
-    const apiUrl = import.meta.env.VITE_APP_API_URL;
+    // const apiUrl = import.meta.env.VITE_APP_API_URL;
   const dispatch = useDispatch();
   const navigate = useNavigate()
   const {items:products} = useSelector((state)=>state.cart);        // items from cartSlice initialState name and since we are mapping with products, so items:products ,we have store value to products(note-> if directly {items} , then use items.map((...)))
@@ -51,7 +51,7 @@ const Cart = () => {
           src={
                       product?.product?.productImage &&
                       product.product.productImage.length > 0
-                        ? `${apiUrl}${product.product.productImage[0]}`
+                        ? product.product.productImage[0]
                         : s1
                     }
            className="w-full rounded-lg sm:w-40"/>
