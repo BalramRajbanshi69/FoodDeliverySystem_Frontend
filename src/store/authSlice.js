@@ -59,7 +59,7 @@ export function registerUser(data){
         try {
             const response = await API.post("/auth/register",data) 
             dispatch(setStatus(STATUSES.SUCCESS));
-           
+           return response.data
         } catch (error) {
             console.log(error);
             dispatch(setStatus(STATUSES.ERROR));
@@ -89,6 +89,7 @@ export function loginUser(data){
             // if(response.status === 200 && response.data.token){
             //     localStorage.setItem("token",response.data.token)                    // after suucessfull login setItem token in localStorage; response.data.token from response.data and token from backend
             // } 
+            return response.data
         } catch (error) {
             console.log(error);
             dispatch(setStatus(STATUSES.ERROR))
