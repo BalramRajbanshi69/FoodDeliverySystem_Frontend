@@ -71,7 +71,7 @@ const Product = () => {
                     className=" cursor-pointer my-6 w-95 transform overflow-hidden  bg-white dark:bg-slate-800 shadow-md duration-300 hover:scale-105 hover:shadow-lg"
                   >
                     <img
-                      className="h-48 w-full object-cover object-center"
+                      className="h-48 w-full object-cover object-top"
                       // src={
                       //   product.productImage
                       //     ? product.productImage
