@@ -11,13 +11,8 @@ if (!fs.existsSync(uploadsDir)) {
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        // Check the mimetype of file to be uploaded
-        const allowedFileTypes = ["image/jpg", "image/png", "image/jpeg"];
-        if (!allowedFileTypes.includes(file.mimetype)) {
-            return cb(new Error("This file type is not supported. Only JPG, PNG, and JPEG files are allowed."));
-        }
-        
-        cb(null, uploadsDir); // Use absolute path to uploads directory
+        // Just set the destination - file validation is handled by fileFilter
+        cb(null, uploadsDir);
     },
     filename: function (req, file, cb) {
         // Generate unique filename with timestamp and original name
@@ -31,11 +26,12 @@ const storage = multer.diskStorage({
 
 // File filter for additional validation
 const fileFilter = (req, file, cb) => {
-    const allowedFileTypes = ["image/jpg", "image/png", "image/jpeg"];
+    const allowedFileTypes = ["image/jpeg", "image/png", "image/jpg"];
+    console.log("File mimetype:", file.mimetype); // Debug log
     if (allowedFileTypes.includes(file.mimetype)) {
         cb(null, true);
     } else {
-        cb(new Error("This file type is not supported. Only JPG, PNG, and JPEG files are allowed."), false);
+        cb(new Error(`File type ${file.mimetype} is not supported. Only JPG, PNG, and JPEG files are allowed.`), false);
     }
 };
 
