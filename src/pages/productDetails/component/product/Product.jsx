@@ -40,6 +40,7 @@ const Product = ({ id: productId }) => {
         localStorage.getItem("token") == null ||
         localStorage.getItem("token") == undefined)
     ) {
+      toast.success("Please login to add products!")
       return navigate("/login");
     }
      // Check if the product is already in the cart
