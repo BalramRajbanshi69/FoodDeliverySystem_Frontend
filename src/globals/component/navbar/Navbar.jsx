@@ -45,7 +45,7 @@ export default function Navbar() {
               className="flex space-x-2 items-center"
             >
               <span className="text-2xl font-bold text-yellow-900">
-                Digital<span className="text-yellow-700"> Food</span>
+                Digital<span className="text-yellow-700">Khana</span>
               </span>
             </Link>
 

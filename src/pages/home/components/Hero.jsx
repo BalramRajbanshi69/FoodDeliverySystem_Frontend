@@ -63,12 +63,8 @@ const Hero = () => {
                   </button>
                 </div>
               </form>
-              <p className="mt-8 text-gray-700 lg:w-10/12">
-                Sit amet consectetur adipisicing elit.{" "}
-                <a href="#" className="text-yellow-700">
-                  connection
-                </a>{" "}
-                tenetur nihil quaerat suscipit, sunt dignissimos.
+             <p className="mt-8 text-gray-700 lg:w-10/12">
+                Digital Khana brings your favorite meals to your doorstep with a seamless online ordering experience. Discover local restaurants, explore diverse cuisines, and enjoy fast delivery with just a few clicks.
               </p>
             </div>
             
