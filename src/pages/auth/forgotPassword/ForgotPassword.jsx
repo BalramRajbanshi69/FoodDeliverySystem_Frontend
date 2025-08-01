@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { Link, useNavigate } from "react-router-dom"
 import { STATUSES } from "../../../globals/misc/statuses"
 import { forgotPassword } from "../../../store/authSlice"
+import toast from "react-hot-toast"
 
 const ForgotPassword = () => {
   const [email,setEmail] = useState("")
@@ -15,6 +16,7 @@ const ForgotPassword = () => {
     e.preventDefault()
     dispatch(forgotPassword({email}))
     if(status === STATUSES.SUCCESS){
+      toast.success("Otp has been sent to email. Please check email!")
         navigate("/verifyotp")
     }
 

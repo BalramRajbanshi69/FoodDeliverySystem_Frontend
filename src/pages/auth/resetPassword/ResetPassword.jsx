@@ -2,6 +2,7 @@ import { useSelector } from "react-redux";
 import { APIAuthenticated } from "../../../http";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 const ResetPassword = () => {
   const navigate = useNavigate();
@@ -15,16 +16,26 @@ const ResetPassword = () => {
   };
 
   const handleSubmit = async (e) => {
-    try {
-      e.preventDefault();
-      const response = await APIAuthenticated.post("/auth/resetPassword", data);
+    e.preventDefault();
 
+    if(newPassword == "" || confirmPassword == ""){
+      toast.error("Require all fields!")
+      return;
+    }
+     // Check if passwords match
+    if (newPassword !== confirmPassword) {
+      toast.error("Passwords do not match!");
+      return; 
+    }
+    try {
+      const response = await APIAuthenticated.post("/auth/resetPassword", data);
       if (response.status === 200) {
+        toast.success("Password changed successfully")
         navigate("/login");
       }
     } catch (error) {
       console.log(error);
-      alert("Something went wrong");
+      toast.error("Something went wrong!")
     }
   };
 
@@ -161,7 +172,7 @@ const ResetPassword = () => {
                     ease-in
                   "
                 >
-                  <span className="mr-2 uppercase">Reset Password</span>
+                  <span className="mr-2 uppercase cursor-pointer">Reset Password</span>
                   <span>
                     <svg
                       className="h-6 w-6"

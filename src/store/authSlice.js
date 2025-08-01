@@ -121,15 +121,19 @@ export function forgotPassword(data){
 //verify otp
 export function verifyotp(data){
     return async function verifyotpThunk(dispatch){
-        dispatch(setStatus(STATUSES.LOADING))
+        dispatch(setForgotPasswordDataStatus(STATUSES.LOADING))
         try {
             const response = await APIAuthenticated.post("auth/verifyOtp/",data)
             // dispatch(setUser(response.data.data))
             dispatch(setEmail(data.email))
             dispatch(setForgotPasswordDataStatus(STATUSES.SUCCESS))
+            return response.data
         } catch (error) {
             console.log(error)
-            dispatch(setStatus(STATUSES.ERROR))
+            dispatch(setForgotPasswordDataStatus(STATUSES.ERROR))
+            throw new Error(
+        error.response?.data?.message || "An unexpected error occurred during OTP verification"
+      );
         }
     }
 }
