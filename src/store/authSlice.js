@@ -6,8 +6,6 @@ import { API, APIAuthenticated } from "../http";
 
 
 
-
-
 const authSlice = createSlice({
     name:"auth",
     initialState:{
@@ -94,7 +92,7 @@ export function loginUser(data){
             console.log(error);
             dispatch(setStatus(STATUSES.ERROR))
             throw new Error(
-        error.response?.data?.msg || "An unexpected error occurred during login"
+        error.response?.data?.msg || "Invalid credentials"
       );
         }
     }

@@ -1,25 +1,19 @@
-import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { Link, useNavigate } from 'react-router-dom'
-
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
 import { STATUSES } from '../../../globals/misc/statuses';
 import { loginUser } from '../../../store/authSlice';
 import toast from 'react-hot-toast';
 
-
-
 const Login = () => {
-  const {token,data,status} = useSelector((state)=>state.auth);  
-    
-  
-  const [userData,setUserData]= useState({
-    email:"",
-    password:""
-  })
-  
+  const { token, data, status } = useSelector((state) => state.auth);
+  const [userData, setUserData] = useState({
+    email: '',
+    password: '',
+  });
+  const [errors, setErrors] = useState({});
   const dispatch = useDispatch();
   const navigate = useNavigate();
-   const [errors, setErrors] = useState({});
 
   // Handle input changes and clear corresponding errors
   const handleChange = (e) => {
@@ -28,54 +22,52 @@ const Login = () => {
 
     // Clear the error for the specific field when the user starts typing
     if (errors[name]) {
-      setErrors((prevErrors) => ({ ...prevErrors, [name]: "" }));
+      setErrors((prevErrors) => ({ ...prevErrors, [name]: '' }));
     }
   };
 
-    // Client-side form validation
+  // Client-side form validation
   const validateForm = () => {
     const newErrors = {};
 
     if (!userData.email.trim()) {
-      newErrors.email = "Email is required";
+      newErrors.email = 'Email is required';
     } else if (!/\S+@\S+\.\S+/.test(userData.email)) {
-      newErrors.email = "Email is invalid";
+      newErrors.email = 'Email is invalid';
     }
 
     if (!userData.password.trim()) {
-      newErrors.password = "Password is required";
+      newErrors.password = 'Password is required';
     } else if (userData.password.length < 6) {
-      newErrors.password = "Password must be at least 6 characters";
+      newErrors.password = 'Password must be at least 6 characters';
     }
 
-    setErrors(newErrors); // Update errors state
-    return Object.keys(newErrors).length === 0; // Return true if no errors
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (validateForm()) { 
+    if (validateForm()) {
       try {
-
         await dispatch(loginUser(userData))
-        toast.success("Login successful!"); 
-        navigate("/"); 
       } catch (error) {
-        console.error("Login Error:", error); 
-        toast.error(error.message || "Login failed. Please check your credentials.");
-      } 
+        toast.error(error.message); 
+      }
     }
   };
 
+  // Monitor status for success
+  useEffect(() => {
+    if (status === STATUSES.SUCCESS && token) {
+      toast.success('Login successful!');
+      navigate('/');
+    }
+  }, [status, token, navigate]);
 
-
-  
-  
-  
   return (
-   
-        <div>
+    <div>
       <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100">
         <div
           className="
@@ -100,7 +92,7 @@ const Login = () => {
           </div>
 
           <div className="mt-10">
-            <form action="#" onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit}>
               <div className="flex flex-col mb-5">
                 <label
                   htmlFor="email"
@@ -144,6 +136,9 @@ const Login = () => {
                     "
                     placeholder="Enter your email"
                   />
+                  {errors.email && (
+                    <p className="text-red-500 text-xs mt-1">{errors.email}</p>
+                  )}
                 </div>
               </div>
               <div className="flex flex-col mb-6">
@@ -191,13 +186,17 @@ const Login = () => {
                     "
                     placeholder="Enter your password"
                   />
+                  {errors.password && (
+                    <p className="text-red-500 text-xs mt-1">{errors.password}</p>
+                  )}
                 </div>
               </div>
 
               <div className="flex w-full">
                 <button
                   type="submit"
-                  className="
+                  disabled={status === STATUSES.LOADING}
+                  className={`
                     flex
                     mt-2
                     items-center
@@ -213,9 +212,12 @@ const Login = () => {
                     transition
                     duration-150
                     ease-in
-                  "
+                    ${status === STATUSES.LOADING ? 'opacity-50 cursor-not-allowed' : ''}
+                  `}
                 >
-                  <span className="mr-2 uppercase">Login</span>
+                  <span className="mr-2 uppercase cursor-pointer">
+                    {status === STATUSES.LOADING ? 'Logging in...' : 'Login'}
+                  </span>
                   <span>
                     <svg
                       className="h-6 w-6"
@@ -231,32 +233,26 @@ const Login = () => {
                   </span>
                 </button>
               </div>
-             <div className='mt-2 flex flex-col items-end text-red-400'>
-               <Link to="/forgotpassword">Forgot Password?</Link>
-             </div>
-             <div className="flex justify-center items-center mt-6">
-          <span className="ml-2">
-            Don't have an account?
-            <Link to="/register" className="text-xm ml-2 text-blue-500 font-semibold">
-              Register now
-            </Link>
-          </span>
-        </div>
+              <div className="mt-2 flex flex-col items-end text-red-400">
+                <Link to="/forgotpassword">Forgot Password?</Link>
+              </div>
+              <div className="flex justify-center items-center mt-6">
+                <span className="ml-2">
+                  Don't have an account?
+                  <Link
+                    to="/register"
+                    className="text-xm ml-2 text-blue-500 font-semibold"
+                  >
+                    Register now
+                  </Link>
+                </span>
+              </div>
             </form>
           </div>
         </div>
-        
       </div>
     </div>
-    
-  )
-}
+  );
+};
 
-export default Login
-
-
-
-
-
-
-
+export default Login;
