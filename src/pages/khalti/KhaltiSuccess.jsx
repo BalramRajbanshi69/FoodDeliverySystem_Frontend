@@ -46,3 +46,5 @@ const KhaltiSuccess = () => {
 }
 
 export default KhaltiSuccess
+
+
